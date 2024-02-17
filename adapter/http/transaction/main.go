@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/bianavic/financial-planning-system/model/transaction"
+	"github.com/bianavic/financial-planning-system/util"
 	"io"
 	"net/http"
-	"time"
 )
 
 func GetTransactions(writer http.ResponseWriter, request *http.Request) {
@@ -16,17 +16,13 @@ func GetTransactions(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	writer.Header().Set("Content-Type", "application/json")
-	//fmt.Fprintf(writer, "Hello, Stranger! Welcome to my Home Page")
-
-	var layout = "2006-01-02T15:04:05"
-	salaryReceived, _ := time.Parse(layout, "2024-02-29T15:45:00")
 
 	var transactions = transaction.Transactions{
 		transaction.Transaction{
 			Title:     "Salary",
 			Amount:    5888.33,
 			Type:      0,
-			CreatedAt: salaryReceived,
+			CreatedAt: util.StringToDateTime("2024-02-29T15:45:00"),
 		},
 	}
 

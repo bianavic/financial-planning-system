@@ -12,5 +12,5 @@ func Init() {
 
 	http.HandleFunc("/health", actuator.Health)
 
-	http.ListenAndServe(":8888", nil)
+	_ = http.ListenAndServe(":8888", nil)
 }

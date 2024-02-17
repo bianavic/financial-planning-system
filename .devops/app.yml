@@ -1,0 +1,7 @@
+version: "v2.23.0"
+services:
+  app:
+    image: bianavic/finance
+    container_name: "app_finance"
+    ports:
+      - 8888:8888

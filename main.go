@@ -2,13 +2,16 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"io"
 	"net/http"
 	"time"
 )
 
 func main() {
 
-	http.HandleFunc("/", getTransactions)
+	http.HandleFunc("/transactions", getTransactions)
+	http.HandleFunc("/transaction", addTransaction)
 
 	http.ListenAndServe(":8888", nil)
 
@@ -45,4 +48,21 @@ func getTransactions(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	_ = json.NewEncoder(writer).Encode(transactions)
+}
+
+func addTransaction(writer http.ResponseWriter, request *http.Request) {
+	if request.Method != "POST" {
+		writer.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+
+	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(http.StatusCreated)
+
+	var res = Transaction{}
+	var body, _ = io.ReadAll(request.Body) // array de bytes
+
+	_ = json.Unmarshal(body, &res)
+
+	fmt.Print(res)
 }
